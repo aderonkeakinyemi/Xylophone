@@ -1,68 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  runApp(MyXylophone());
+}
+
+class MyXylophone extends StatelessWidget {
   void myAudio(int soundNumber) {
     final player = AudioCache();
     player.play('note$soundNumber.wav');
   }
 
-  runApp(MaterialApp(
-    home: Scaffold(
-      backgroundColor: Colors.blue,
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: Text('Xylophone'),
+  Widget BuildKey(Color col, int k) {
+    // Every line of code must end with semicolon;
+
+    return Expanded(
+      child: FlatButton(
+        color: col,
+        onPressed: () {
+          myAudio(k);
+        },
       ),
-      body: Center(
-        child: Column(
-          children: [
-            FlatButton(
-              color: Colors.red,
-              onPressed: () {
-                print('clicked on it');
-                myAudio(1);
-              },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                BuildKey(Colors.red, 1),
+                BuildKey(Colors.blue, 2),
+                BuildKey(Colors.green, 3),
+                BuildKey(Colors.purple, 4),
+                BuildKey(Colors.white, 5),
+                BuildKey(Colors.yellow, 6),
+                BuildKey(Colors.lime, 7),
+              ],
             ),
-            FlatButton(
-              color: Colors.green,
-              onPressed: () {
-                myAudio(2);
-              },
-            ),
-            FlatButton(
-              color: Colors.yellow,
-              onPressed: () {
-                myAudio(3);
-              },
-            ),
-            FlatButton(
-              color: Colors.orange,
-              onPressed: () {
-                myAudio(4);
-              },
-            ),
-            FlatButton(
-              color: Colors.purple,
-              onPressed: () {
-                myAudio(5);
-              },
-            ),
-            FlatButton(
-              color: Colors.black,
-              onPressed: () {
-                myAudio(6);
-              },
-            ),
-            FlatButton(
-              color: Colors.white,
-              onPressed: () {
-                myAudio(7);
-              },
-            ),
-          ],
+          ),
         ),
       ),
-    ),
-  ));
+    );
+  }
 }
